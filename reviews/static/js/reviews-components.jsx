@@ -9,17 +9,17 @@ class Review extends React.Component{
 
   render(){
     return(
-   <tr>
-    <td>
-      { this.props.title || "No Title" }
-    </td>
-    <td>
-        { this.findFirstRelevantPortion() }
-    </td>
-    <td>
-      { this.props.score }
-    </td>
-        </tr>
+      <tr>
+        <td>
+          { this.props.title || "No Title" }
+        </td>
+        <td>
+          { this.findFirstRelevantPortion() }
+        </td>
+        <td>
+          { this.props.score }
+        </td>
+      </tr>
     )
   }
 }
@@ -44,24 +44,24 @@ class SearchResults extends React.Component {
 
   render() {
     return (
-        <table className="table">
+      <table className="table">
         <thead>
-        <tr>
-        <th>
-        Title
-      </th>
-        <th>
-        Body
-      </th>
-        <th>
-        Score
-      </th>
-        </tr>
+          <tr>
+            <th>
+              Title
+            </th>
+            <th>
+              Body
+            </th>
+            <th>
+              Score
+            </th>
+          </tr>
         </thead>
         <tbody>
-        {this.state.reviews.map(review =>
-                                <Review key={review.id} title={review.title} body={review.body} score={review.score} term={this.props.q}/>)}
-        </tbody>
+          {this.state.reviews.map(review =>
+          <Review key={review.id} title={review.title} body={review.body} score={review.score} term={this.props.q}/>)}
+      </tbody>
         </table>
     );
   }
@@ -77,6 +77,6 @@ function getQueryParam(paramName){
 }
 
 ReactDOM.render(
-    <SearchResults q={getQueryParam('q')} />,
+  <SearchResults q={getQueryParam('q')} />,
   document.getElementById('root')
 )
