@@ -1,3 +1,6 @@
+import json
+
+from channels import Group
 from django.db.models import Q, F
 from django.shortcuts import render
 from rest_framework import viewsets
@@ -26,7 +29,7 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        queryset = Post.objects.all()
+        queryset = Post.objects.all().order_by('-score')
         if self.request.query_params.get('q'):
             term = self.request.query_params.get('q')
             queryset = queryset.filter(Q(title__icontains=term) | Q(body__icontains=term))
@@ -37,6 +40,7 @@ class PostViewSet(viewsets.ModelViewSet):
         post = self.get_object()
         post.score = F('score') +1
         post.save()
+        Group('scores').send({"text": json.dumps({"id":post.id, "change": 1})})
         return Response()
 
 
@@ -45,4 +49,5 @@ class PostViewSet(viewsets.ModelViewSet):
         post = self.get_object()
         post.score = F('score') -1
         post.save()
+        Group('scores').send({"text": json.dumps({"id":post.id, "change": -1})})
         return Response()

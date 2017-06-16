@@ -22,9 +22,7 @@ api_router = routers.DefaultRouter()
 api_router.register(r'posts', PostViewSet)
 
 urlpatterns = [
-    url(r'^$', index),
-    url(r'^results/$', results),
     url(r'^api/', include(api_router.urls)),
     url(r'^admin/', admin.site.urls),
-
+    url(r'^', index),
 ]
