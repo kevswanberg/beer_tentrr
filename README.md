@@ -26,11 +26,15 @@ the search term for creating the snippet it comes from.
 
 Upvote + Downvote is available on the API
 
+The search results are now sorted by score. Searching an empty string returns all posts. You can go into the post detail to vote the post up/down
+
 # Missing
-The results aren't set up to be paginated, if I had more time they would be.
 
-Upvoting and downvoting aren't yet on the front end.
+Pagination, the body snippets contain HTML tags, would preferably be snipped out.
 
-The score page doesn't exist yet. It would have looked similar to the results page. I would have used a websocket connection on the front end, tied it
-to the django backend making use of django-channels project. In the upvote/downvote routes on the API there would be calls to send events when the
-votes occur
+The way I'm using channels is okay but not that great here. Since channels can occasionally miss messages if a message is missed the count won't ever be correct.
+Could avoid this by sending the actual post score along with a timestamp so the app can recover if it missed a message.
+
+Didn't get around to adjusting view_count on the posts as well. It would be similar to how upvoting/downvoting work though.
+
+Should include upvote/downvote buttons in the results view rather than just the detail view
